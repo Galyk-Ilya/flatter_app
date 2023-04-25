@@ -1,32 +1,17 @@
-import 'package:equatable/equatable.dart';
+import 'package:flatter_app/model/persons_list.dart';
 
-import '../model/person.dart';
+class PersonResponseState {}
 
-enum Status { loading, success, error }
+class Success extends PersonResponseState {
+  List<Results> persons;
 
-class PersonResponseState extends Equatable {
-  final List<Person> persons;
-  final Status status;
-  final String error;
+  Success(this.persons);
+}
 
-  const PersonResponseState(
-      {required this.persons, required this.status, required this.error});
+class Loading extends PersonResponseState {}
 
-  @override
-  List<Object> get props => [persons, status, error];
+class Error extends PersonResponseState {
+  String error;
 
-  @override
-  bool get stringify => true;
-
-  PersonResponseState copyWith({
-    required Status status,
-    required String error,
-    required List<Person> persons,
-  }) {
-    return PersonResponseState(
-      status: status ?? this.status,
-      error: error ?? this.error,
-      persons: persons ?? this.persons,
-    );
-  }
+  Error(this.error);
 }

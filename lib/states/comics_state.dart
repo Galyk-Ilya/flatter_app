@@ -1,31 +1,17 @@
-import 'package:equatable/equatable.dart';
+import 'package:flatter_app/model/comics_list.dart';
 
-import '../model/comics.dart';
-enum Status { loading, success, error }
+class ComicsResponseState {}
 
-class ComicsResponseState extends Equatable {
-  final List<Comics> comics;
-  final Status status;
-  final String error;
+class Success extends ComicsResponseState {
+  List<Results> comics;
 
-  const ComicsResponseState(
-      {required this.comics, required this.status, required this.error});
+  Success(this.comics);
+}
 
-  @override
-  List<Object> get props => [comics, status, error];
+class Loading extends ComicsResponseState {}
 
-  @override
-  bool get stringify => true;
+class Error extends ComicsResponseState {
+  String error;
 
-  ComicsResponseState copyWith({
-    required Status status,
-    required String error,
-    required List<Comics> comics,
-  }) {
-    return ComicsResponseState(
-      status: status ?? this.status,
-      error: error ?? this.error,
-      comics: comics ?? this.comics,
-    );
-  }
+  Error(this.error);
 }
