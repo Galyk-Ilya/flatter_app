@@ -1,18 +1,18 @@
-import 'package:flatter_app/pages/comics_widget.dart';
+import 'package:flatter_app/pages/comics_page.dart';
 import 'package:flutter/material.dart';
 
 import '../cubit/persons.dart';
 import '../states/person_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class PersonWidget extends StatefulWidget {
-  const PersonWidget({Key? key}) : super(key: key);
+class PersonPage extends StatefulWidget {
+  const PersonPage({Key? key}) : super(key: key);
 
   @override
-  State<PersonWidget> createState() => _PersonWidgetState();
+  State<PersonPage> createState() => _PersonPageState();
 }
 
-class _PersonWidgetState extends State<PersonWidget> {
+class _PersonPageState extends State<PersonPage> {
   PersonsCubit get personsCubit => BlocProvider.of(context);
 
   @override
@@ -46,10 +46,10 @@ class _PersonWidgetState extends State<PersonWidget> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => ComicsWidget(
-                                personId: state.persons[index].id.toString(),
+                              builder: (context) {
+                                return ComicsPage.create(state.persons[index
+                                ].id.toString());}
                               ),
-                            ),
                           );
                         },
                       ),

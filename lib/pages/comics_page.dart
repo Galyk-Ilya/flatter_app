@@ -5,16 +5,24 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ComicsWidget extends StatefulWidget {
-  final String personId;
+class ComicsPage extends StatefulWidget {
+  String personId;
 
-  const ComicsWidget({Key? key, required this.personId}) : super(key: key);
+  ComicsPage({Key? key, required this.personId}) : super(key: key);
+
+  static Widget create(String id) {
+    return MultiBlocProvider(providers: [
+      BlocProvider<ComicsCubit>(
+        create: (BuildContext context) => ComicsCubit(),
+      ),
+    ], child: ComicsPage(personId: id));
+  }
 
   @override
-  State<ComicsWidget> createState() => _ComicsWidgetState();
+  State<ComicsPage> createState() => _ComicsPageState();
 }
 
-class _ComicsWidgetState extends State<ComicsWidget> {
+class _ComicsPageState extends State<ComicsPage> {
   ComicsCubit get comicsCubit => BlocProvider.of(context);
 
   @override
@@ -37,22 +45,13 @@ class _ComicsWidgetState extends State<ComicsWidget> {
             return ListView.builder(
                 itemCount: state.comics.length,
                 itemBuilder: (BuildContext context, int index) {
-                  Card(
+                 return Card(
                     child: ListTile(
-                      title: Text(state.comics[index].title.toString()),
-                      subtitle:
-                          Text(state.comics[index].description.toString()),
+                      title: Text(state.comics[index].title ?? " "),
+                       subtitle:
+                           Text(state.comics[index].description ?? " "),
                     ),
                   );
-                  // Column(
-                  //   children: [
-                  //     ElevatedButton(
-                  //         onPressed: () {
-                  //           Navigator.pushReplacementNamed(context, '/');
-                  //         },
-                  //         child: const Text('back'))
-                  //   ],
-                  // );
                 });
           } else {
             return Container();
